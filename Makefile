@@ -1,8 +1,8 @@
-CC = g++
+CC = gcc
 CFLAGS = $(WARNINGS) $(DEBUG) $(DEFINE)
 DEBUG = -g
 #DEFINE = -DVAR=VAL
-WARNINGS = -ansi -pedantic -Wall -Wextra -D__USE_FIXED_PROTOTYPES__
+WARNINGS = -ansi -pedantic -Wall -Wextra -D__USE_FIXED_PROTOTYPES__ --std=c89
 OBJ = main.o
 #LIBS = -lncurses
 APPLICATION_NAME = trivium
@@ -18,8 +18,8 @@ rebuild :
 $(APPLICATION_NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(APPLICATION_NAME) $(LIBS)
 
-main.o : main.cpp
-	$(CC) $(CFLAGS) -c main.cpp $(LIBS)
+main.o : main.c
+	$(CC) $(CFLAGS) -c main.c $(LIBS)
 
 clean :
 	rm -f $(APPLICATION_NAME) $(OBJ)
