@@ -5,8 +5,8 @@
 
 int main(int argc, char** argv) {
 	int i;
-	int len;
-	int* vals;
+	int bits[3] = {0, 1, 0};
+	int fb[3] = {0, 2};
 	lfsrPtr lfsr;
 
 	if (argc > 0) {
@@ -15,20 +15,11 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	len = 1;
-	vals = malloc(len * sizeof(int));
-	if(vals == NULL) {
-		utilError("unable to allocate vals");
-	}
+	lfsr = lfsrInit(3, bits, 2, fb);
 
-	for (i = 0 ; i < len ; i++) {
-		vals[i] = 0;
-	}
-
-	lfsr = lfsrInit(len, vals, len, vals);
-
-	for (i = 0 ; i < 10; i++) {
-		fprintf(stdout, "%i\n", lfsrClock(lfsr));
+	fprintf(stdout, "\ni | output\n-----------\n");
+	for (i = 1 ; i <= 25; i++) {
+		fprintf(stdout, "%2i: %i\n", i, lfsrClock(lfsr));
 	}
 
 	exit(0);
