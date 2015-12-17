@@ -20,7 +20,7 @@ varArrayPtr varArrayInit(int len, int* vals) {
 	ptr->len = len;
 	ptr->vals = malloc(sizeof(int) * len);
 	if (ptr->vals == NULL) {
-		utilError("unable to allocate varArray");
+		utilError("unable to allocate internal array");
 	}
 
 	/* Initialize internal array */

@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "lfsr.h"
 #include "util.h"
+
+#define BYTE_LEN 8
 
 #define A_LEN 93
 #define A_FB 69
@@ -27,7 +30,12 @@ void usage(char* name);
 int cycle(lfsrPtr A, lfsrPtr B, lfsrPtr C);
 
 int main(int argc, char** argv) {
+	char ch;
 	int i;
+	int j;
+	int inputBits[8];
+	int keyBits[8];
+	int outputBits[8];
 	char* input;
 	char* iv;
 	char* key;
@@ -105,12 +113,12 @@ int main(int argc, char** argv) {
 	}
 
 	/* The last 3 bits of C are 1 */
-	for (i = 0; i < C_LEN; i++) {
+	for (i = 0; i < C_LEN - 3; i++) {
 		vals[i] = 0;
 	}
-	vals[C_LEN - 1] = 1;
-	vals[C_LEN - 2] = 1;
 	vals[C_LEN - 3] = 1;
+	vals[C_LEN - 2] = 1;
+	vals[C_LEN - 1] = 1;
 
 	/* Initialize register C */
 	C = lfsrInit(C_LEN, C_FB, C_FF, C_AND_L, C_AND_R, vals);
@@ -137,10 +145,32 @@ int main(int argc, char** argv) {
 
 	utilLog("encrypting plaintext");
 
+	fprintf(stdout, "INPUT     PLAINTEXT KEY       CIPHERTEXT OUTPUT\n");
+	fprintf(stdout, "-----------------------------------------------\n");
 
-	/* DECRYPTION */
+	for (i = 0; i < (int) strlen((const char*) input); i++) {
+		for (j = 0; j < BYTE_LEN; j++) {
+			inputBits[BYTE_LEN - j - 1] = (input[i] & (0x01 << j)) >> j;
+			keyBits[j] = cycle(A, B, C);
+		}
 
-	utilLog("decrypting cyphertext");
+		for (j = 0; j < BYTE_LEN; j++) {
+			outputBits[j] = (inputBits[j] + keyBits[j]) % 2;
+		}
+
+		ch = 0;
+		for (j = 0; j < BYTE_LEN; j++) {
+			ch = ch | outputBits[j] << (BYTE_LEN - j - 1);
+		}
+
+		fprintf(stdout, "%c = 0x%02x  ", input[i], input[i] & 0xff);
+		for (j = 0; j < BYTE_LEN; j++) fprintf(stdout, "%1i", inputBits[j]);
+		fprintf(stdout, "  ");
+		for (j = 0; j < BYTE_LEN; j++) fprintf(stdout, "%1i", keyBits[j]);
+		fprintf(stdout, "  ");
+		for (j = 0; j < BYTE_LEN; j++) fprintf(stdout, "%1i", outputBits[j]);
+		fprintf(stdout, "   0x%02x\n", ch & 0xff);
+	}
 
 	exit(0);
 }
