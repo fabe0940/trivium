@@ -41,7 +41,7 @@ varArray.o : varArray.c varArray.h util.h
 	$(CC) $(CFLAGS) -c varArray.c $(LIBS)
 
 clean :
-	rm -f $(APPLICATION_NAME)
+	rm -f $(APPLICATION_NAME) keygen
 	rm -f $(OBJ)
 	rm -f key
 	rm -f vector
