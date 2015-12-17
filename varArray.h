@@ -2,10 +2,10 @@
 #define _VAR_ARRAY_H_
 
 struct varArray {
-	int size;
-	int* value;
+	int len;
+	int* vals;
 };
 
-struct varArray* varArrayInit(int size, int* value);
+struct varArray* varArrayInit(int len, int* vals);
 
 #endif

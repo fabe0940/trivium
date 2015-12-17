@@ -2,7 +2,7 @@
 #include "util.h"
 #include "varArray.h"
 
-struct varArray* varArrayInit(int size, int* value) {
+struct varArray* varArrayInit(int len, int* vals) {
 	int i;
 	struct varArray* ptr;
 
@@ -15,14 +15,14 @@ struct varArray* varArrayInit(int size, int* value) {
 	}
 
 	utilLog("initializing varArray");
-	ptr->size = size;
-	ptr->value = malloc(sizeof(int) * size);
-	if (ptr->value == NULL) {
+	ptr->len = len;
+	ptr->vals = malloc(sizeof(int) * len);
+	if (ptr->vals == NULL) {
 		utilError("unable to allocate varArray");
 	}
 
-	for (i = 0 ; i < size ; i++) {
-		(ptr->value)[i] = value[i];
+	for (i = 0 ; i < len ; i++) {
+		(ptr->vals)[i] = vals[i];
 	}
 
 	return ptr;
