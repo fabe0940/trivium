@@ -148,10 +148,11 @@ int main(int argc, char** argv) {
 void usage(char* name) {
 	/* Print usage information */
 	fprintf(stdout, "Usage: %s <KEY> <VECTOR> <TEXT>\n", name);
-	fprintf(stdout, "Generate a key stream using the Trivium stream cipher.\n\n");
-	fprintf(stdout, "  KEY\t\tAn 80 bit key, with the first bit to be used on the left\n");
-	fprintf(stdout, "  VECTOR\tAn 80 bit initialization vector, with the first bit to be");
-	fprintf(stdout, " used on the left.\n");
+	fprintf(stdout, "Generate a key stream using the Trivium cipher.\n\n");
+	fprintf(stdout, "  KEY\t\tAn 80 bit key, with the first bit to be used on");
+	fprintf(stdout, " the left\n");
+	fprintf(stdout, "  VECTOR\tAn 80 bit initialization vector, with the");
+	fprintf(stdout, " first bit to be used on the left.\n");
 	fprintf(stdout, "  TEXT\t\tThe plaintext to be encrypted.\n");
 }
 

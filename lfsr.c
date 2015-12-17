@@ -39,7 +39,8 @@ int lfsrOutput(lfsrPtr lfsr) {
 	/* The output bit is (feedforward + (left * right) + last) modulus 2 */
 	out = 0;
 	out += lfsr->bits->vals[lfsr->feedforward];
-	out += lfsr->bits->vals[(lfsr->and).left] * lfsr->bits->vals[(lfsr->and).right];
+	out += lfsr->bits->vals[(lfsr->and).left]
+		* lfsr->bits->vals[(lfsr->and).right];
 	out += lfsr->bits->vals[lfsr->bits->len - 1];
 	out = out % 2;
 
