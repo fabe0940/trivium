@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = $(WARNINGS) $(DEBUG) $(DEFINE)
 DEBUG = -g
-#DEFINE = -DDEBUG
+DEFINE = -DDEBUG -DTRACE
 WARNINGS = -ansi -pedantic -Wall -Wextra -D__USE_FIXED_PROTOTYPES__ --std=c89
 OBJ = main.o lfsr.o util.o varArray.o
 #LIBS = -lncurses

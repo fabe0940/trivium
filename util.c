@@ -8,15 +8,23 @@
 #define DEBUG 0
 #endif
 
+#ifdef TRACE
+#define TRACE 1
+#else
+#define TRACE 0
+#endif
+
 void utilError(char* msg) {
-	fprintf(stderr, "ERR: %s\n", msg);
+	/* Print error message and exit */
+	fprintf(stderr, "ERROR: %s\n", msg);
 	fprintf(stderr, "exiting...\n");
 
 	exit(1);
 }
 
 void utilWarning(char* msg) {
-	if (DEBUG) {
+	/* Print warning message */
+	if (DEBUG || TRACE) {
 		fprintf(stderr, "WARN: %s\n", msg);
 	}
 
@@ -24,8 +32,18 @@ void utilWarning(char* msg) {
 }
 
 void utilLog(char* msg) {
-	if (DEBUG) {
+	/* Print log message */
+	if (DEBUG || TRACE) {
 		fprintf(stderr, "LOG: %s\n", msg);
+	}
+
+	return;
+}
+
+void utilTrace(char* msg) {
+	/* Print trace message */
+	if (TRACE) {
+		fprintf(stderr, "TRACE: %s\n", msg);
 	}
 
 	return;

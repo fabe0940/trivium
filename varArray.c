@@ -6,21 +6,24 @@ varArrayPtr varArrayInit(int len, int* vals) {
 	int i;
 	struct varArray* ptr;
 
-	utilLog("--- varArrayInit() ---");
+	utilTrace("--- varArrayInit() ---");
 
-	utilLog("allocating varArray");
+	/* Allocate varArray */
+	utilTrace("allocating varArray");
 	ptr = malloc(sizeof(struct varArray));
 	if (ptr == NULL) {
 		utilError("unable to allocate varArray");
 	}
 
-	utilLog("initializing varArray");
+	/* Allocate internal array */
+	utilTrace("initializing varArray");
 	ptr->len = len;
 	ptr->vals = malloc(sizeof(int) * len);
 	if (ptr->vals == NULL) {
 		utilError("unable to allocate varArray");
 	}
 
+	/* Initialize internal array */
 	for (i = 0 ; i < len ; i++) {
 		(ptr->vals)[i] = vals[i];
 	}

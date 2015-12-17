@@ -16,7 +16,7 @@ struct lfsr {
 };
 typedef struct lfsr* lfsrPtr;
 
-lfsrPtr lfsrInit(int fb, int ff, struct pair a, int len, int* vals);
+lfsrPtr lfsrInit(int len, int fb, int ff, int l, int r, int* vals);
 int lfsrOutput(lfsrPtr lfsr);
 void lfsrShift(lfsrPtr lfsr, int input);
 
