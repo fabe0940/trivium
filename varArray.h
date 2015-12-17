@@ -5,7 +5,8 @@ struct varArray {
 	int len;
 	int* vals;
 };
+typedef struct varArray* varArrayPtr;
 
-struct varArray* varArrayInit(int len, int* vals);
+varArrayPtr varArrayInit(int len, int* vals);
 
 #endif

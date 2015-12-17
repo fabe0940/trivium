@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include "util.h"
 
-void error(char* msg) {
+void utilError(char* msg) {
 	fprintf(stderr, "ERROR: %s\n", msg);
 	fprintf(stderr, "exiting...\n");
 
 	exit(1);
 }
 
-void warning(char* msg) {
+void utilWarning(char* msg) {
 #ifdef DEBUG
 	fprintf(stderr, "ERROR: %s\n", msg);
 #endif
@@ -17,7 +17,7 @@ void warning(char* msg) {
 	return;
 }
 
-void log(char* msg) {
+void utilLog(char* msg) {
 #ifdef DEBUG
 	fprintf(stderr, "LOG: %s\n", msg);
 #endif

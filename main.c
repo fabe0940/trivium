@@ -18,17 +18,17 @@ int main(int argc, char** argv) {
 	len = 1;
 	vals = malloc(len * sizeof(int));
 	if(vals == NULL) {
-		error("unable to allocate vals");
+		utilError("unable to allocate vals");
 	}
 
 	for (i = 0 ; i < len ; i++) {
 		vals[i] = 0;
 	}
 
-	lfsr = lfsrInit(len, vals);
+	lfsr = lfsrInit(len, vals, len, vals);
 
 	for (i = 0 ; i < 10; i++) {
-		lfsrClock(lfsr);
+		fprintf(stdout, "%i\n", lfsrClock(lfsr));
 	}
 
 	exit(0);

@@ -1,13 +1,14 @@
 #include <stdlib.h>
 #include "lfsr.h"
 #include "util.h"
+#include "varArray.h"
 
 int _lfsrNextBit(lfsrPtr lfsr);
 
 int _lfsrNextBit(lfsrPtr lfsr) {
 	int val;
 
-	log("--- _lfsrNextBit() ---");
+	utilLog("--- _lfsrNextBit() ---");
 
 	val = 0;
 	/* finish me */
@@ -15,43 +16,36 @@ int _lfsrNextBit(lfsrPtr lfsr) {
 	return val;
 }
 
-lfsrPtr lfsrInit(int len, int* vals) {
-	int i;
-	lfsrPtr lfsr;
+lfsrPtr lfsrInit(int bitLen, int* bitVals, int fbLen, int* fbVals) {
+	lfsrPtr ptr;
 
-	log("--- lfsrInit() ---");
+	utilLog("--- lfsrInit() ---");
 
-	log("allocating LFSR");
-	lfsr = malloc(sizeof(struct lfsr));
-	if (lfsr == NULL) {
-		error("unable to allocate LFSR");
+	utilLog("allocating shift register");
+	ptr = malloc(sizeof(struct lfsr));
+	if (ptr == NULL) {
+		utilError("unable to allocate shift register");
 	}
 
-	log("initializing LFSR");
-	lfsr->len = len;
-	lfsr->vals = malloc(sizeof(int) * len);
-	if (lfsr->vals == NULL) {
-		error("unable to allocate LFSR");
-	}
+	utilLog("allocating shift register contents");
+	ptr->bits = varArrayInit(bitLen, bitVals);
+	ptr->fb = varArrayInit(fbLen, fbVals);
 
-	for (i = 0 ; i < len ; i++) {
-		(lfsr->vals)[i] = vals[i];
-	}
-
-	return lfsr;
+	return ptr;
 }
 
 int lfsrClock(lfsrPtr lfsr) {
 	int bit;
 	int i;
 
-	log("--- lfsrClock() ---");
+	utilLog("--- lfsrClock() ---");
 
 	bit = _lfsrNextBit(lfsr);
-	for (i = 0 ; i < lfsr->len - 1 ; i++) {
-		(lfsr->vals)[i] = (lfsr->vals)[i + 1];
+
+	for (i = 0 ; i < lfsr->bits->len - 1 ; i++) {
+		(lfsr->bits->vals)[i] = (lfsr->bits->vals)[i + 1];
 	}
-	(lfsr->vals)[lfsr->len - 1] = bit;
+	lfsr->bits->vals[lfsr->bits->len - 1] = bit;
 
 	return bit;
 }

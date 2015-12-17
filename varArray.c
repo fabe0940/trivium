@@ -2,7 +2,7 @@
 #include "util.h"
 #include "varArray.h"
 
-struct varArray* varArrayInit(int len, int* vals) {
+varArrayPtr varArrayInit(int len, int* vals) {
 	int i;
 	struct varArray* ptr;
 
